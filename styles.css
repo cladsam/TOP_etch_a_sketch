@@ -20,13 +20,15 @@
 }
 
 .cLigne {
-    border: 1px solid red;
+    border: 0.1px solid black;
     display: flex;
     flex: 1;
 }
 
 .cColumn {
-    border: 1px solid green;
+    border: 0.1px solid black;
+    border-top: 0;
+    border-bottom: 0;
     flex: 1;
 }
 

@@ -1,5 +1,13 @@
 
-let gridSize = 16;
+let gridSize = 32;
+// let color = red;
+const colorModeEnum = {
+    pickedColor: "pickedColor",
+    rainbow: "rainbow",
+    progressiveDark: "progressive",
+}
+let colorMode = colorModeEnum.rainbow;
+let pickedColor = "black";
 
 const mainContainer = document.querySelector("#mainContainer");
 
@@ -27,17 +35,37 @@ function addHoverEffect(gridSize, container) {
         console.log("juste un autre test")
         // const listColumns = line.children;
         for (const column of line.querySelectorAll('.cColumn')) {
-            column.addEventListener("mouseover", (e) => { setColor(e, "red") });
+            column.addEventListener("mouseover", (e) => { setColor(e, colorMode, pickedColor) });
             console.log("getThere");
         }
     }
 
 }
-function setColor(e, color) {
-    e.target.style.backgroundColor = color;
+function setColor(e, l_colorMode, l_pickedColor) {
+    let appliedColor;
+    switch (l_colorMode) {
+        case colorModeEnum.pickedColor:
+            appliedColor = l_pickedColor;
+            break;
+        case colorModeEnum.progressiveDark:
+            break;
+        case colorModeEnum.rainbow:
+            appliedColor = getRandomRGB();
+            break;
+    }
+    e.target.style.backgroundColor = appliedColor;
 
 }
+function getRandomInt(minVal, maxVal) {
+    return Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+}
+function getRandomRGB() {
+    let r = getRandomInt(0, 255);
+    let g = getRandomInt(0, 255);
+    let b = getRandomInt(0, 255);
+    return `rgb(${r},${g},${b})`;
 
+}
 
 
 // Obsolete code 
