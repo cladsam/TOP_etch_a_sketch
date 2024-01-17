@@ -1,24 +1,40 @@
-
-let gridSize = 32;
-// let color = red;
+// constants and enumerations
 const colorModeEnum = {
     pickedColor: "pickedColor",
     rainbow: "rainbow",
     progressiveDark: "progressive",
+    erase: "erase",
 }
-let colorMode = colorModeEnum.progressiveDark;
-let pickedColor = "black";
+const initialGridSize = 16;
+const initialColor = "rgb(0,0,0)";
+const initalColorMode = colorModeEnum.pickedColor;
 
+// DOM pointers
 const mainContainer = document.querySelector("#mainContainer");
 const rangeGridSize = document.querySelector("#rangeGridSize");
 const pGridSize = document.querySelector("#pGridSize");
+const btnBlack = document.querySelector("#btnBlack");
+const btnGreyScale = document.querySelector("#btnGreyScale");
+const btnRainbow = document.querySelector("#btnRainbow");
+const btnReset = document.querySelector("#btnReset");
+const btnEraser = document.querySelector("#btnEraser");
 
-drawGrid(gridSize, mainContainer);
-addHoverEffect(gridSize, mainContainer)
-pGridSize.textContent = getGridSizeString(gridSize);
-rangeGridSize.addEventListener("change", (e) => { changeGridSize(e) })
-rangeGridSize.value = gridSize;
+// Global variables
+let gridSize = initialGridSize;
+let colorMode = initalColorMode
+let pickedColor = initialColor
 
+// Init page 
+resetAll();
+btnBlack.addEventListener("click", (e) => { pickedColor = initialColor; colorMode = initalColorMode; });
+btnGreyScale.addEventListener("click", (e) => { colorMode = colorModeEnum.progressiveDark; });
+btnRainbow.addEventListener("click", (e) => { colorMode = colorModeEnum.rainbow; });
+btnReset.addEventListener("click", (e) => { resetAll() });
+btnEraser.addEventListener("click", (e) => { colorMode = colorModeEnum.erase; });
+
+
+
+// Functions
 function drawGrid(gridSize, container) {
 
     // draw a gridSize * gridSize grid
@@ -77,6 +93,9 @@ function setColor(e, l_colorMode, l_pickedColor) {
         case colorModeEnum.rainbow:
             appliedColor = getRandomRGB();
             break;
+        case colorModeEnum.erase:
+            appliedColor = "rgb(255,255,255)";
+            break;
     }
     e.target.style.backgroundColor = appliedColor;
 
@@ -108,11 +127,20 @@ function addColorRatio(currentColor) {
 
     return `rgb(${r},${g},${b})`
 }
+function resetAll() {
+    gridSize = initialGridSize;
+    colorMode = initalColorMode
+    pickedColor = initialColor
+    gridSize = initialGridSize;
+    eraseGrid(mainContainer)
+    drawGrid(gridSize, mainContainer);
+    addHoverEffect(gridSize, mainContainer)
+    pGridSize.textContent = getGridSizeString(gridSize);
+    rangeGridSize.addEventListener("change", (e) => { changeGridSize(e) })
+    rangeGridSize.value = gridSize;
+}
 
 
-
-// TODO : add grid size display based on slider value 
-// TODO : resize grid when slider changes
 // TODO : add color pick to be able to pickup color
 // TODO : add button to switch grid on and Off
 // TODO : map grey functionality to a button
@@ -121,6 +149,10 @@ function addColorRatio(currentColor) {
 // TODO: review css for global page
 
 
+/// add event to Map="btnBlack" to swithc color mode to black
+/// add event to Map= id="btnRainbow"
+/// add event to Map= id="btnGreyScale"
+/// add event to Map= id="btnReset"
 
 // Obsolete code 
 // draw a gridSize * gridSize 
