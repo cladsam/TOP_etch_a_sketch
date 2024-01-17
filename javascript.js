@@ -6,7 +6,7 @@ const colorModeEnum = {
     rainbow: "rainbow",
     progressiveDark: "progressive",
 }
-let colorMode = colorModeEnum.rainbow;
+let colorMode = colorModeEnum.progressiveDark;
 let pickedColor = "black";
 
 const mainContainer = document.querySelector("#mainContainer");
@@ -24,6 +24,7 @@ function drawGrid(gridSize, container) {
         for (let colonnes = 1; colonnes <= gridSize; colonnes++) {
             let newDiv = document.createElement('div');
             newDiv.className = "cColumn"
+            newDiv.style.backgroundColor = "rgb(255,255,255)"; //It's important to initiate the rgb value for later function that will add grey to the actual color
             newLine.appendChild(newDiv);
         }
         container.appendChild(newLine);
@@ -48,6 +49,7 @@ function setColor(e, l_colorMode, l_pickedColor) {
             appliedColor = l_pickedColor;
             break;
         case colorModeEnum.progressiveDark:
+            appliedColor = addColorRatio(e.target.style.backgroundColor);
             break;
         case colorModeEnum.rainbow:
             appliedColor = getRandomRGB();
@@ -66,6 +68,35 @@ function getRandomRGB() {
     return `rgb(${r},${g},${b})`;
 
 }
+function addColorRatio(currentColor) {
+    //Get rgb values
+    const regex = /[0-9]{1,3}/g;
+    let rgbTab = currentColor.match(regex);
+    let r = rgbTab[0]
+    let g = rgbTab[1];
+    let b = rgbTab[2];
+
+    // Add +10% of Dark (10% of 255, not of the current value)
+    r = Math.max(0, Math.floor((r * 10 - 255) / 10));
+    g = Math.max(0, Math.floor((g * 10 - 255) / 10));
+    b = Math.max(0, Math.floor((b * 10 - 255) / 10));
+
+    //  Return new "greyer" rgb <-- not sure greyer is an actual word but still like it !
+
+    return `rgb(${r},${g},${b})`
+}
+
+
+
+// TODO : add grid size display based on slider value 
+// TODO : resize grid when slider changes
+// TODO : add color pick to be able to pickup color
+// TODO : add button to switch grid on and Off
+// TODO : map grey functionality to a button
+// TODO : add eraser functionnality
+// TODO : map eraser functionality to a button
+// TODO: review css for global page
+
 
 
 // Obsolete code 
