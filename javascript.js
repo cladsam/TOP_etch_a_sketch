@@ -10,10 +10,14 @@ let colorMode = colorModeEnum.progressiveDark;
 let pickedColor = "black";
 
 const mainContainer = document.querySelector("#mainContainer");
-
+const rangeGridSize = document.querySelector("#rangeGridSize");
+const pGridSize = document.querySelector("#pGridSize");
 
 drawGrid(gridSize, mainContainer);
 addHoverEffect(gridSize, mainContainer)
+pGridSize.textContent = getGridSizeString(gridSize);
+rangeGridSize.addEventListener("change", (e) => { changeGridSize(e) })
+rangeGridSize.value = gridSize;
 
 function drawGrid(gridSize, container) {
 
@@ -30,6 +34,25 @@ function drawGrid(gridSize, container) {
         container.appendChild(newLine);
     }
 }
+function getGridSizeString(gridSize) {
+    return `Gridsize : ${gridSize} x ${gridSize}`;
+}
+
+function changeGridSize(e) {
+    pGridSize.textContent = getGridSizeString(e.target.value);
+    gridSize = e.target.value;
+    eraseGrid(mainContainer);
+    drawGrid(gridSize, mainContainer)
+    addHoverEffect(gridSize, mainContainer)
+
+}
+function eraseGrid(container) {
+    // for (const line of container.querySelectorAll('.cLigne')){
+
+    // }        
+    container.innerHTML = null;
+}
+
 
 function addHoverEffect(gridSize, container) {
     for (const line of container.querySelectorAll('.cLigne')) {
