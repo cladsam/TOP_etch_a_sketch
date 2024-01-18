@@ -82,4 +82,78 @@ body {
 
 }
 
-/* TODO : add css for sideBarre class buttons */
+.sideBarre {
+    width: 150px;
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #F8FAE5;
+
+}
+
+
+#pGridSize {
+    margin-top: 0;
+    /* rangeGridSiz */
+}
+
+#rangeGridSize {
+    margin-bottom: 0px;
+}
+
+#rangeGridSize {
+    -webkit-appearance: none;
+    height: 15px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+#rangeGridSize:hover {
+    opacity: 1;
+}
+
+/* /* #rangeGridSize::-webkit-slider-runnable-track {
+    /* removing default appearance */
+/* -webkit-appearance: none;
+appearance: none;
+/* creating a custom design 
+height: 15px;
+width: 15px;
+background-color: #fff;
+border-radius: 10%;
+border: 2px solid rgb(0, 255, 110);
+} */
+
+#rangeGridSize::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background-color: #F8FAE5;
+    cursor: pointer;
+}
+
+#rangeGridSize::-webkit-slider-thumb:hover,
+.sideBarre:hover {
+    background-color: #B19470;
+
+}
+
+#header {
+    background-color: #43766C;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer {
+    background-color: #76453B;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

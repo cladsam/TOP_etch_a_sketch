@@ -8,6 +8,8 @@ const colorModeEnum = {
 const initialGridSize = 16;
 const initialColor = "rgb(0,0,0)";
 const initalColorMode = colorModeEnum.pickedColor;
+const initialButtonsColor = "#F8FAE5";
+const selectButtonColor = "#B19470";
 
 // DOM pointers
 const mainContainer = document.querySelector("#mainContainer");
@@ -23,14 +25,52 @@ const btnEraser = document.querySelector("#btnEraser");
 let gridSize = initialGridSize;
 let colorMode = initalColorMode
 let pickedColor = initialColor
+let mouseClicked = false;
 
 // Init page 
 resetAll();
-btnBlack.addEventListener("click", (e) => { pickedColor = initialColor; colorMode = initalColorMode; });
-btnGreyScale.addEventListener("click", (e) => { colorMode = colorModeEnum.progressiveDark; });
-btnRainbow.addEventListener("click", (e) => { colorMode = colorModeEnum.rainbow; });
+// btnBlack.addEventListener("click", (e) => { pickedColor = initialColor; colorMode = initalColorMode; });
+btnBlack.addEventListener("click", (e) => { setColorModeToBlack(e) });
+btnGreyScale.addEventListener("click", (e) => { setColorModeToGreyScale(e) });
+btnRainbow.addEventListener("click", (e) => { setColorModeToRainbow(e) });
 btnReset.addEventListener("click", (e) => { resetAll() });
-btnEraser.addEventListener("click", (e) => { colorMode = colorModeEnum.erase; });
+btnEraser.addEventListener("click", (e) => { setColorModeToErase(e) });
+document.addEventListener("mousedown", (e) => { if (e.button === 0) { mouseClicked = true } });
+document.addEventListener("mouseup", (e) => { if (e.button === 0) { mouseClicked = false } });
+
+function setColorModeToBlack(e) {
+
+    pickedColor = initialColor;
+    colorMode = initalColorMode;
+    resetButtonColor();
+    e.target.style.backgroundColor = selectButtonColor;
+
+}
+function setColorModeToGreyScale(e) {
+    colorMode = colorModeEnum.progressiveDark;
+    resetButtonColor();
+    e.target.style.backgroundColor = selectButtonColor;
+}
+function setColorModeToRainbow(e) {
+    colorMode = colorModeEnum.rainbow;
+    resetButtonColor();
+    e.target.style.backgroundColor = selectButtonColor;
+}
+function setColorModeToErase(e) {
+    colorMode = colorModeEnum.erase;
+    resetButtonColor();
+    e.target.style.backgroundColor = selectButtonColor;
+}
+
+function resetButtonColor() {
+    let buttons = document.querySelectorAll(".sideBarre");
+    for (btn of buttons) {
+        btn.style.backgroundColor = initialButtonsColor
+
+    }
+
+}
+
 
 
 
@@ -97,8 +137,9 @@ function setColor(e, l_colorMode, l_pickedColor) {
             appliedColor = "rgb(255,255,255)";
             break;
     }
-    e.target.style.backgroundColor = appliedColor;
-
+    if (mouseClicked) {
+        e.target.style.backgroundColor = appliedColor;
+    };
 }
 function getRandomInt(minVal, maxVal) {
     return Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
@@ -138,7 +179,10 @@ function resetAll() {
     pGridSize.textContent = getGridSizeString(gridSize);
     rangeGridSize.addEventListener("change", (e) => { changeGridSize(e) })
     rangeGridSize.value = gridSize;
+    resetButtonColor();
+    btnBlack.style.backgroundColor = selectButtonColor;
 }
+
 
 
 // TODO : add color pick to be able to pickup color
